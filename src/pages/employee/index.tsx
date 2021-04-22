@@ -213,7 +213,7 @@ const EmployeeList: React.FC = () => {
   ];
   return (
     <PageContainer>
-      <ProTable<API.RuleListItem, API.PageParams>
+      <ProTable
         headerTitle={"员工列表"}
         actionRef={actionRef}
         // rowKey="key"
