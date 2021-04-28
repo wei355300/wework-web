@@ -10,8 +10,10 @@ import type { ProDescriptionsItemProps } from '@ant-design/pro-descriptions';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import type { FormValueType } from './components/UpdateForm';
 import UpdateForm from './components/UpdateForm';
+import OpenAccountForm, { OpenAccountFormProps } from './OpenAccountForm';
 import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
-import { employeeList } from './model';
+import { employeeList, Employee } from './model';
+import { OpenAccountParams, openAccount } from './Account/model';
 /**
  * 添加节点
  *
@@ -85,11 +87,11 @@ const EmployeeList: React.FC = () => {
   const [createModalVisible, handleModalVisible] = useState<boolean>(false);
   /** 分布更新窗口的弹窗 */
 
-  const [updateModalVisible, handleUpdateModalVisible] = useState<boolean>(false);
+  const [openAccountModalVisible, handleOpenAccountModalVisible] = useState<boolean>(false);
   const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
-  const [currentRow, setCurrentRow] = useState<API.RuleListItem>();
-  const [selectedRowsState, setSelectedRows] = useState<API.RuleListItem[]>([]);
+  const [currentRow, setCurrentRow] = useState<Employee>();
+  const [selectedRowsState, setSelectedRows] = useState<Employee[]>([]);
   /** 国际化配置 */
 
   // const intl = useIntl();
@@ -102,19 +104,20 @@ const EmployeeList: React.FC = () => {
     {
       title: '姓名',
       dataIndex: 'name',
-      tip: '员工姓名',
-      render: (dom, entity) => {
-        return (
-          <a
-            onClick={() => {
-              setCurrentRow(entity);
-              setShowDetail(true);
-            }}
-          >
-            {dom}
-          </a>
-        );
-      },
+      valueType: 'text',
+      // tip: '员工姓名',
+      // render: (dom, entity) => {
+      //   return (
+      //     <a
+      //       onClick={() => {
+      //         setCurrentRow(entity);
+      //         setShowDetail(true);
+      //       }}
+      //     >
+      //       {dom}
+      //     </a>
+      //   );
+      // },
     },
     {
       title: '手机号',
@@ -200,13 +203,22 @@ const EmployeeList: React.FC = () => {
       valueType: 'option',
       render: (_, record) => [
         <a
-          key="config"
+          key="openAccount"
           onClick={() => {
-            handleUpdateModalVisible(true);
+            handleOpenAccountModalVisible(true);
             setCurrentRow(record);
           }}
         >
-          配置
+          开通账号
+        </a>,
+        <a
+          key="chatList"
+          onClick={() => {
+            // handleOpenAccountModalVisible(true);
+            setCurrentRow(record);
+          }}
+        >
+          聊天记录
         </a>,
       ],
     },
@@ -244,12 +256,32 @@ const EmployeeList: React.FC = () => {
         }}
         request={employeeList}
         columns={columns}
-        rowSelection={{
-          onChange: (_, selectedRows) => {
-            setSelectedRows(selectedRows);
-          },
-        }}
+        // rowSelection={{
+        //   onChange: (_, selectedRows) => {
+        //     setSelectedRows(selectedRows);
+        //   },
+        // }}
       />
+      <OpenAccountForm
+        employee={currentRow} 
+        visible={openAccountModalVisible} 
+        onVisibleChange={(visible: boolean) => {
+          handleOpenAccountModalVisible(visible);
+        }}
+        onSubmit={async (values: OpenAccountParams) => {
+          const ret = await openAccount(values);
+          if (ret.success) {
+            message.success('更新成功');
+            handleOpenAccountModalVisible(!openAccountModalVisible);
+            return true;
+          }
+          else {
+            message.warning(ret.errorMessage);
+            return false;
+          }
+        }}
+      >
+      </OpenAccountForm>
       {/* {selectedRowsState?.length > 0 && (
         <FooterToolbar
           extra={

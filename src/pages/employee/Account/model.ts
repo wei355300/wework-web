@@ -35,6 +35,11 @@ export interface DelAccountParams {
   mobile: string;
 }
 
+export interface OpenAccountParams {
+  mobile: string;
+  password: string;
+}
+
 export interface Result {
   success?: boolean;
   showType?: number;
@@ -45,7 +50,7 @@ export interface Result {
 
 export async function updatePass(params: UpdatePassParams) {
   return request<Result>('/api/qc/wework/account/update/pwd', {
-    method: 'POST',
+    method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -55,6 +60,17 @@ export async function updatePass(params: UpdatePassParams) {
 
 export async function delAccount(params: DelAccountParams) {
   return request<Result>('/api/qc/wework/account/del', {
+    method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: params,
+  });
+}
+
+export async function openAccount(params: OpenAccountParams) {
+  console.log('openaccount params', params);
+  return request<Result>('/api/qc/wework/account/open', {
     method: 'POST',
       headers: {
         'Content-Type': 'application/json',

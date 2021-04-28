@@ -126,6 +126,8 @@ const codeMessage = {
 const errorHandler = (error: ResponseError) => {
   const { response } = error;
 
+  console.log('error handler', error);
+
   if (response && response.status) {
     const errorText = codeMessage[response.status] || response.statusText;
     const { status, url } = response;
@@ -139,7 +141,13 @@ const errorHandler = (error: ResponseError) => {
     }
   }
 
-  if (!response) {
+  if (error.name === 'BizError') {
+    notification.warn({
+      message: `操作错误`,
+      description: error.message,
+    });
+  }
+  else if (!response) {
     notification.error({
       description: '您的网络发生异常，无法连接服务器',
       message: '网络异常',
