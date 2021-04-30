@@ -13,7 +13,7 @@ import UpdateForm from './components/UpdateForm';
 import OpenAccountForm, { OpenAccountFormProps } from './OpenAccountForm';
 import { rule, addRule, updateRule, removeRule } from '@/services/ant-design-pro/api';
 import { employeeList, Employee } from './model';
-import { OpenAccountParams, openAccount } from './Account/model';
+import { OpenAccountParams, openAccount } from '../Account/model';
 /**
  * 添加节点
  *

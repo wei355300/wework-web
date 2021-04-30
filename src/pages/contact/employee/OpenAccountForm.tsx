@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProForm, {
   ModalForm,
   ProFormText,
 } from '@ant-design/pro-form';
+import { Form } from 'antd';
 
 import { Employee } from './model';
 
@@ -15,10 +16,16 @@ export interface OpenAccountFormProps {
 }
 
 export default (props) => {
-  console.log('p', props.employee);
+  const [form] = Form.useForm();
+  useEffect(() => {
+    form.setFieldsValue({
+      mobile: props?.employee?.mobile || "" 
+    });
+  });
   return (
     <>
       <ModalForm
+        form={form}
         width={350}
         title={"开通"+(props?.employee?.name || "")+"账号"}
         visible={props.visible}
@@ -27,7 +34,7 @@ export default (props) => {
           props.onVisibleChange(visible);
         }}
       >
-        <ProFormText width={200} name="mobile" disabled label="手机号" initialValue={props?.employee?.mobile} />
+        <ProFormText width={200} name="mobile" disabled label="手机号" />
         <ProForm.Group>
           <ProFormText
             width={200}

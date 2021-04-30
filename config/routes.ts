@@ -16,12 +16,6 @@ export default [
     ],
   },
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
-  },
-  {
     path: '/admin',
     name: 'admin',
     icon: 'crown',
@@ -43,27 +37,34 @@ export default [
     component: './TableList',
   },
   {
-   name: 'employee',
+    name: 'contact',
     icon: 'table',
-    path: '/employee',
+    path: '/contact',
     routes: [
       {
-        path: '/employee/list',
-        name: 'employee-list',
-        icon: 'smile',
-        component: './employee',
-      },
-      {
-        path: '/employee/account',
+        path: '/contact/account/list',
         name: 'account-list',
         icon: 'smile',
-        component: './employee/Account',
+        component: './contact/Account',
+      },
+      {
+        path: '/contact/employee/list',
+        name: 'employee-list',
+        icon: 'smile',
+        component: './contact/employee',
       },
     ]
   },
   {
     path: '/',
     redirect: '/welcome',
+  },
+  {
+    path: '/welcome',
+    name: 'welcome',
+    icon: 'smile',
+    hideInMenu: true,
+    component: './Welcome',
   },
   // {
   //   name: '分析页',

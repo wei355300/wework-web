@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, message, Space, Typography, Form } from 'antd';
 import ProForm, {
   ModalForm,
@@ -6,10 +6,11 @@ import ProForm, {
 } from '@ant-design/pro-form';
 
 export default (props) => {
-  console.log('update pass', props.account);
   const [form] = Form.useForm();
-  form.setFieldsValue({
-     mobile: props?.account?.mobile || "" 
+  useEffect(() => {
+    form.setFieldsValue({
+      mobile: props?.account?.mobile || "" 
+    });
   });
   return (
     <>
