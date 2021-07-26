@@ -37,6 +37,19 @@ export default [
     component: './TableList',
   },
   {
+    name: 'chat',
+    icon: 'table',
+    path: '/chat',
+    routes: [
+      {
+        path: '/chat/list',
+        name: 'chat-list',
+        icon: 'smile',
+        component: './chat',
+      },
+    ]
+  },
+  {
     name: 'contact',
     icon: 'table',
     path: '/contact',

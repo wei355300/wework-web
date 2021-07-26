@@ -49,6 +49,7 @@
     "@ant-design/pro-descriptions": "^1.2.0",
     "@ant-design/pro-form": "^1.3.0",
     "@ant-design/pro-layout": "^6.9.0",
+    "@ant-design/pro-list": "^1.9.0",
     "@ant-design/pro-table": "^2.17.0",
     "@antv/data-set": "^0.11.0",
     "@types/lodash.debounce": "^4.0.6",
@@ -71,6 +72,7 @@
     "react-dom": "^17.0.0",
     "react-fittext": "^1.0.0",
     "react-helmet-async": "^1.0.4",
+    "react-infinite-scroller": "^1.2.4",
     "umi": "^3.4.10",
     "umi-request": "^1.0.8"
   },

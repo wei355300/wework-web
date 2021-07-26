@@ -54,4 +54,7 @@ export default {
   'menu.contact.employee-list': '员工列表',
   'menu.contact.account-list': '账号列表',
   'menu.contact.contact-external-list': '外部联系人列表',
+
+  'menu.chat': '会话管理',
+  'menu.chat.chat-list': '会话列表'
 };
