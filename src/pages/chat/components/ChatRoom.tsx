@@ -1,15 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Dispatch, connect } from 'umi';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Form, Drawer, List, Avatar } from 'antd';
-import ProList from '@ant-design/pro-list';
+import { Drawer, List, Avatar } from 'antd';
+import { ChatRoom, ChatMsg } from '../service';
+import { ChatRoomStateType } from '../model';
 
-import { chatRoomList, ChatRoom, ChatMsg } from '../service';
-import MsgComponentProvider from './MsgComponentProvider';
 
-import { Typography } from 'antd';
-import ChatRoomModel, { ChatRoomStateType } from '../model';
-const { Title } = Typography;
+import ChatMsgComponentProvider from './MsgComponentProvider';
 
 export interface ChatRoomProps {
   chatRoom: ChatRoom;
@@ -21,12 +18,6 @@ export interface ChatRoomProps {
   dispatch: Dispatch;
 }
 
-interface ChatRoomState {
-  chatRoom: ChatRoom;
-  list?: ChatMsg[];
-  total?: number;
-}
-
 /**
  * 按时间倒序, 采用虚拟滚动的形式展示聊天记录
  */
@@ -34,37 +25,29 @@ interface ChatRoomState {
 const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
   const { dispatch } = props;
   const drawerWidth = 850;
-  const defaultPageSize = 40;
-  console.log('chatroom props: ', props);
-  console.log('chatroom: ', props.chatRoom);
-
-  // const dispatchMsgList = () => {
-  //   dispatch({
-  //     type: 'chatRoomMsgModel/reqChatRoomMsgList',
-  //     payload: {
-  //       roomId: props.chatRoom.roomId,
-  //     },
-  //   });
-  // }
+  const defaultPageSize = 20;
 
   useEffect(() => {
-    loadMoreData(0);
+    loadMoreData(1);
   }, []);
 
-  const loadMoreData = (page:any) => {
+  const loadMoreData = (page:number) => {
     console.log('page', page);
+    let currentPage = page || 1;
     dispatch({
       type: 'chatRoomMsgModel/reqChatRoomMsgList',
       payload: {
         roomId: props.chatRoom.roomId,
-        // current: currentPage,
-        // pageSize: pageSize
+        current: currentPage,
+        pageSize: defaultPageSize
       },
     });
   }
 
   const hasMore = () => {
-    return true;
+    let t = props.total || 0;
+    let l = props.list?.length || 0;
+    return t > l;
   }
 
   return (
@@ -86,25 +69,29 @@ const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
       >
         <InfiniteScroll
           initialLoad={false}
-          pageStart={0}
+          pageStart={1}
           loadMore={loadMoreData}
           hasMore={!props.loading && hasMore()}
           useWindow={false}
           isReverse={true}
         >
           <List dataSource={props.list} 
+            loading={props.loading}
             renderItem={msg => (
-              <List.Item key={msg.id} extra={msg.msgTime}>
-                <List.Item.Meta
-                  avatar={
-                    <Avatar src={msg.sender?.thumbAvatar} />
-                  }
-                  title={msg.sender?.name}
-                  description={msg.content}
-                />
-                {/* <div>{msg.content}</div> */}
-              </List.Item>
-            )}
+              ChatMsgComponentProvider({msg: msg}))}
+              // <ChatMsgComponentProvider msg={}/>     
+
+              // <List.Item key={msg.id} extra={msg.msgTime}>
+              //   <List.Item.Meta
+              //     avatar={
+              //       <Avatar src={msg.sender?.thumbAvatar} />
+              //     }
+              //     title={msg.sender?.name}
+              //     description={msg.content}
+              //   />
+              //   {/* <div>{msg.content}</div> */}
+              // </List.Item>
+            // )}
             >
           </List>
           {/* <ProList<ChatRoom>
@@ -140,6 +127,7 @@ const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
 };
 
 export default connect(({chatRoomMsgModel, loading}: {chatRoomMsgModel: ChatRoomStateType, loading: { models: { [key: string]: boolean }}}) => {
+  
   return {
     list: chatRoomMsgModel.list,
     total: chatRoomMsgModel.total,

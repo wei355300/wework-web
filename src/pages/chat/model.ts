@@ -41,9 +41,12 @@ const ChatRoomMsgModel: ChatRoomMsgModelType = {
     getChatRoomMsgList(state, { payload }) {
       console.log('state', state);
       console.log('payload', payload);
+      let res_list = payload.data;
+      let state_list = state?.list;
+      let r_list = res_list.reverse().concat(state_list);
       return {
         ...state,
-        list: payload.data,
+        list: r_list,
         total: payload.total,
       };
     },

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Typography } from 'antd';
+import { Typography, List, Avatar } from 'antd';
+// import { Drawer, List, Avatar } from 'antd';
 
 
 import { ChatMsg } from '../service';
@@ -18,10 +19,22 @@ class TextMsg extends React.Component<TextMsgProps>  {
         super(props);
         this.msgType='text';
     }
-
-  render() {
-      return <Text>{this.props.msg?.content}</Text>;
-  };
+    
+    render() {
+        let msg = this.props.msg || {};
+        return <List.Item key={msg.id} extra={msg.msgTime}>
+            <List.Item.Meta
+                avatar={
+                    <Avatar src={msg.sender?.thumbAvatar} />
+                }
+                title={msg.sender?.name}
+                description={msg.content}
+            />
+            {/* <div>{msg.content}</div> */}
+        </List.Item>
+      
+    //   return <Text>{this.props.msg?.content}</Text>;
+    };
 };
 
 export default TextMsg;
