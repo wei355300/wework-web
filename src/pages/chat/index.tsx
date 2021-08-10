@@ -39,22 +39,6 @@ const ChatList: React.FC = (props:any) => {
           // description: {dataIndex: 'lastMsg'},
           description: {
             render: (text: React.ReactNode,record: ChatRoom,index: number) => {
-              //   export interface ChatMsg {
-              //   id?: string;
-              //   sender?: ChatMsgUser;
-              //   msgTime?: string;
-              //   content?: string;
-              //   msgType?: string;
-              // };
-
-            //   ChatRoom {
-            //     id?: string;
-            //     roomId?: string;
-            //     name?: string;
-            //     lastTime?: string;
-            //     avatar?: string;
-            //     lastMsg?: string;
-            // };
               
               let msg = {
                 id: record.id,

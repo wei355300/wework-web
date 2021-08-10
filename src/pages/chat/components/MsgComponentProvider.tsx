@@ -16,7 +16,7 @@ import { ChatMsg } from '../service';
 
 export interface ChatMsgComponentProps {
     msg: ChatMsg;
-    pure: boolean;
+    pure?: boolean;
 }
 
 //fixme 动态加载 js 类库, 用于显示图片, 音/视频等能力
