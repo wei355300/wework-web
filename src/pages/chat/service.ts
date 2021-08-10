@@ -23,6 +23,7 @@ export interface ChatRoom {
     lastTime?: string;
     avatar?: string;
     lastMsg?: string;
+    msgType?: string;
 };
 
 export interface ChatRoomListResult {

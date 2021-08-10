@@ -9,6 +9,7 @@ const { Text } = Typography;
 
 export interface TextMsgProps {
     msg?: ChatMsg
+    pure?: boolean;
 }
 
 class TextMsg extends React.Component<TextMsgProps>  {
@@ -22,6 +23,9 @@ class TextMsg extends React.Component<TextMsgProps>  {
     
     render() {
         let msg = this.props.msg || {};
+        if(this.props.pure) {
+            return <Text>{msg.content}</Text>
+        }
         return <List.Item key={msg.id} extra={msg.msgTime}>
             <List.Item.Meta
                 avatar={

@@ -11,10 +11,12 @@ import React from 'react';
 import TextMsg from './TextMsg';
 import VideoMsg from './VideoMsg';
 import ImageMsg from './ImgMsg';
+import FileMsg from './FileMsg';
 import { ChatMsg } from '../service';
 
 export interface ChatMsgComponentProps {
     msg: ChatMsg;
+    pure: boolean;
 }
 
 //fixme 动态加载 js 类库, 用于显示图片, 音/视频等能力
@@ -22,7 +24,6 @@ export interface ChatMsgComponentProps {
 const ChatMsgComponentProvider = (props: ChatMsgComponentProps) => {
 
     let Comp;
-
     switch(props.msg.msgType) {
         case 'text':
             Comp = (<TextMsg {...props} />);
@@ -30,10 +31,29 @@ const ChatMsgComponentProvider = (props: ChatMsgComponentProps) => {
         case 'video':
             Comp = (<VideoMsg {...props}/>);
             break;
+        case 'voice':
+            Comp = (<TextMsg {...props} />);
+            break;
         case 'image':
             Comp = (<ImageMsg {...props}/>);
             break;
+        case 'file':
+            Comp = (<FileMsg {...props} />);
+            break;
+        case 'emotion':
+            Comp = (<TextMsg {...props} />);
+            break;
+        case 'revoke':
+            Comp = (<TextMsg {...props} />);
+            break;
+        case 'location':
+            Comp = (<TextMsg {...props} />);
+            break;
+        case 'sphfeed':
+            Comp = (<TextMsg {...props} />);
+            break;
         default:
+            console.log('msgtype:', props.msg.msgType);
             Comp = ("<div>nothing</div>");
             break;
     }

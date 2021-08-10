@@ -11,7 +11,8 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { chatRoomList, ChatRoom } from './service';
 
 import ChatRoomCompontent from './components/ChatRoom';
-import ChatRoomMsgList from './components/ChatRoomMsg';
+// import ChatRoomMsgList from './components/ChatRoomMsg';
+import ChatMsgComponentProvider from './components/MsgComponentProvider';
 
 const { Title } = Typography;
 
@@ -35,7 +36,39 @@ const ChatList: React.FC = (props:any) => {
           },
           type: {dataIndex: 'new'},
           avatar: {dataIndex: 'avatar'},
-          description: {dataIndex: 'lastMsg'},
+          // description: {dataIndex: 'lastMsg'},
+          description: {
+            render: (text: React.ReactNode,record: ChatRoom,index: number) => {
+              //   export interface ChatMsg {
+              //   id?: string;
+              //   sender?: ChatMsgUser;
+              //   msgTime?: string;
+              //   content?: string;
+              //   msgType?: string;
+              // };
+
+            //   ChatRoom {
+            //     id?: string;
+            //     roomId?: string;
+            //     name?: string;
+            //     lastTime?: string;
+            //     avatar?: string;
+            //     lastMsg?: string;
+            // };
+              
+              let msg = {
+                id: record.id,
+                // sender: {
+                //   name:
+                // },
+                msgTime: record.lastTime,
+                content: record.lastMsg,
+                msgType: record.msgType
+              }
+
+              return ChatMsgComponentProvider({msg: msg, pure: true});
+              // return <Title level={5} style={{ width: '800px' }} ellipsis={true}>{record.name}</Title>;
+          }},
           actions: {},
           extra: {
             dataIndex: 'lastTime'

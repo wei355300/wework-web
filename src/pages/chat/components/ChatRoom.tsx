@@ -1,10 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Dispatch, connect } from 'umi';
 import InfiniteScroll from 'react-infinite-scroller';
 import { Drawer, List, Avatar } from 'antd';
 import { ChatRoom, ChatMsg } from '../service';
 import { ChatRoomStateType } from '../model';
-
 
 import ChatMsgComponentProvider from './MsgComponentProvider';
 
@@ -13,6 +12,7 @@ export interface ChatRoomProps {
   visible?: boolean;
   onVisibleChange?: any;
   list?: ChatMsg[];
+  preDataSize?: number;
   total?: number;
   loading?: boolean;
   dispatch: Dispatch;
@@ -20,15 +20,23 @@ export interface ChatRoomProps {
 
 /**
  * 按时间倒序, 采用虚拟滚动的形式展示聊天记录
+ * 
+ * 滚动加载组件:
+ * https://github.com/danbovey/react-infinite-scroller
  */
 
 const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
   const { dispatch } = props;
   const drawerWidth = 850;
   const defaultPageSize = 20;
+  // const scrollElementRef = useRef(null);
 
   useEffect(() => {
     loadMoreData(1);
+    //todo 
+    //scroll到每次加载的数据的最后一条的位置
+    //div.scrollTop
+    // console.log("scrollElementRef", scrollElementRef?.current);
   }, []);
 
   const loadMoreData = (page:number) => {
@@ -67,60 +75,25 @@ const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
           });
         }}
       >
-        <InfiniteScroll
-          initialLoad={false}
-          pageStart={1}
-          loadMore={loadMoreData}
-          hasMore={!props.loading && hasMore()}
-          useWindow={false}
-          isReverse={true}
-        >
-          <List dataSource={props.list} 
-            loading={props.loading}
-            renderItem={msg => (
-              ChatMsgComponentProvider({msg: msg}))}
-              // <ChatMsgComponentProvider msg={}/>     
-
-              // <List.Item key={msg.id} extra={msg.msgTime}>
-              //   <List.Item.Meta
-              //     avatar={
-              //       <Avatar src={msg.sender?.thumbAvatar} />
-              //     }
-              //     title={msg.sender?.name}
-              //     description={msg.content}
-              //   />
-              //   {/* <div>{msg.content}</div> */}
-              // </List.Item>
-            // )}
-            >
-          </List>
-          {/* <ProList<ChatRoom>
-            pagination={{
-              // defaultPageSize: 20,
-              responsive: true,
-              showSizeChanger: true
-            }}
-            metas={{
-              title: {
-                render: (text: React.ReactNode, msg: ChatMsg,index: number) => {
-                  return MsgComponentProvider({msg: msg});
-                  // return <Title level={5} style={{ width: '800px' }} ellipsis={true}>{msg.content}</Title>;
-                }
-              },
-            }}
-            options = {{
-              fullScreen: false,
-              reload: true,
-              setting: false,
-              density: false,
-              search: false,
-            }}
-            headerTitle="会话列表"
-            split={true}
-            dataSource={props.list}
-            loading={props.loading}
-          /> */}
-        </InfiniteScroll>
+        <>
+          <InfiniteScroll
+            // ref={scrollElementRef}
+            initialLoad={false}
+            pageStart={1}
+            loadMore={loadMoreData}
+            hasMore={!props.loading && hasMore()}
+            useWindow={false}
+            isReverse={true}
+          >
+            <List dataSource={props.list} 
+              loading={props.loading}
+              renderItem={msg => (
+                ChatMsgComponentProvider({msg: msg}))}
+              >
+            </List>
+            {/* <div ref={messagesEndRef} /> */}
+          </InfiniteScroll>
+        </>
       </Drawer>
     </>
   );
@@ -130,6 +103,7 @@ export default connect(({chatRoomMsgModel, loading}: {chatRoomMsgModel: ChatRoom
   
   return {
     list: chatRoomMsgModel.list,
+    preDataSize: chatRoomMsgModel.preDataSize,
     total: chatRoomMsgModel.total,
     loading: loading.models['chatRoomMsgModel'],
   }

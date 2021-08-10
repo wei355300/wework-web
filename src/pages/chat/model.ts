@@ -4,6 +4,7 @@ import { chatRoomMsgList, ChatMsg} from './service'
 
 export interface ChatRoomStateType {
   list?: ChatMsg[];
+  preDataSize?: number;
   total?: number;
 }
 
@@ -24,6 +25,7 @@ const ChatRoomMsgModel: ChatRoomMsgModelType = {
 
   state: {
     list: [],
+    preDataSize: 0,
     total: 0
   },
 
@@ -39,14 +41,14 @@ const ChatRoomMsgModel: ChatRoomMsgModelType = {
 
   reducers: {
     getChatRoomMsgList(state, { payload }) {
-      console.log('state', state);
-      console.log('payload', payload);
       let res_list = payload.data;
-      let state_list = state?.list;
+      let state_list = state?.list || [];
       let r_list = res_list.reverse().concat(state_list);
+      // let r_list = state_list.concat(res_list);
       return {
         ...state,
         list: r_list,
+        preDataSize: res_list.length,
         total: payload.total,
       };
     },
