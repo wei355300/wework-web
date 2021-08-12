@@ -8,7 +8,8 @@
  * 
  */
 import React, { useState, useEffect } from 'react';
-import ReactPlayer from 'react-player';
+import ReactAudioPlayer from 'react-audio-player';
+// import ReactPlayer from 'react-player';
 import { Typography, List, Avatar, Card } from 'antd';
 
 import {
@@ -19,18 +20,18 @@ import { ChatMsg } from '../service';
 
 const { Text } = Typography;
 
-export interface VideoMsgProps {
+export interface AudioMsgProps {
     msg?: ChatMsg;
     pure?: boolean;
 }
 
-class VideoMsg extends React.Component<VideoMsgProps>  {
+class AudioMsg extends React.Component<AudioMsgProps>  {
 
     public msgType:string;
 
-    constructor(props:VideoMsgProps) {
+    constructor(props:AudioMsgProps) {
         super(props);
-        this.msgType='video';
+        this.msgType='voice';
     }
 
   render() {
@@ -55,11 +56,21 @@ class VideoMsg extends React.Component<VideoMsgProps>  {
             }
             title={msg.sender?.name}
             description={
-                <ReactPlayer height={300} controls={true} url={msg.content} />
+                // <audio controls src={msg.content}>
+                //     您的浏览器不支持 audio 标签。
+                // </audio>
+                // <audio controls>
+                //     <source src="myAudio.mp3" type="audio/mpeg">
+                //     <source src="myAudio.ogg" type="audio/ogg">
+                //     <source src="myAudio.ogg" type="audio/3gpp">
+                //     <p>Your browser doesn't support HTML5 audio. Here is
+                //         a <a href="myAudio.mp3">link to the audio</a> instead.</p>
+                // </audio>
+                <ReactAudioPlayer controls={true} src={msg.content} />
             }
         />
     </List.Item>
   };
 };
 
-export default VideoMsg;
+export default AudioMsg;

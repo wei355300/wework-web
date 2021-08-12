@@ -12,6 +12,7 @@ import TextMsg from './TextMsg';
 import VideoMsg from './VideoMsg';
 import ImageMsg from './ImgMsg';
 import FileMsg from './FileMsg';
+import AudioMsg from './AudioMsg';
 import { ChatMsg } from '../service';
 
 export interface ChatMsgComponentProps {
@@ -32,7 +33,7 @@ const ChatMsgComponentProvider = (props: ChatMsgComponentProps) => {
             Comp = (<VideoMsg {...props}/>);
             break;
         case 'voice':
-            Comp = (<TextMsg {...props} />);
+            Comp = (<AudioMsg {...props} />);
             break;
         case 'image':
             Comp = (<ImageMsg {...props}/>);

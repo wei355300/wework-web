@@ -41,7 +41,7 @@ class FileMsg extends React.Component<FileMsgProps>  {
     if(this.props.pure) {
         return <Card
                     hoverable
-                    style={{ width: 440 }}
+                    style={{ width: 500 }}
                     >
                     <FileOutlined />{fileName}
                 </Card>
