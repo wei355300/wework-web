@@ -12,6 +12,8 @@ declare module '*.bmp';
 declare module '*.tiff';
 declare module 'omit.js';
 
+declare module 'react-infinite-scroller';
+
 // google analytics interface
 type GAFieldsObject = {
   eventCategory: string;

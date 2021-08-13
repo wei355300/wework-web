@@ -14,7 +14,7 @@ const Settings: LayoutSettings & {
   colorWeak: false,
   title: '会话管理系统',
   pwa: false,
-  logo: '../logo.svg',
+  logo: '/logo.svg',
   iconfontUrl: '',
 };
 

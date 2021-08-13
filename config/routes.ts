@@ -15,55 +15,69 @@ export default [
       },
     ],
   },
+  // {
+  //   path: '/admin',
+  //   name: 'admin',
+  //   icon: 'crown',
+  //   access: 'canAdmin',
+  //   component: './Admin',
+  //   routes: [
+  //     {
+  //       path: '/admin/sub-page',
+  //       name: 'sub-page',
+  //       icon: 'smile',
+  //       component: './Welcome',
+  //     },
+  //   ],
+  // },
+  // {
+  //   name: 'list.table-list',
+  //   icon: 'table',
+  //   path: '/list',
+  //   component: './TableList',
+  // },
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
-  },
-  {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    component: './Admin',
+    name: 'chat',
+    icon: 'table',
+    path: '/chat',
     routes: [
       {
-        path: '/admin/sub-page',
-        name: 'sub-page',
+        path: '/chat/list',
+        name: 'chat-list',
         icon: 'smile',
-        component: './Welcome',
+        component: './chat',
       },
-    ],
+    ]
   },
   {
-    name: 'list.table-list',
+    name: 'contact',
     icon: 'table',
-    path: '/list',
-    component: './TableList',
-  },
-  {
-   name: 'employee',
-    icon: 'table',
-    path: '/employee',
+    path: '/contact',
     routes: [
       {
-        path: '/employee/list',
-        name: 'employee-list',
-        icon: 'smile',
-        component: './employee',
-      },
-      {
-        path: '/employee/account',
+        path: '/contact/account/list',
         name: 'account-list',
         icon: 'smile',
-        component: './employee/Account',
+        component: './contact/Account',
+      },
+      {
+        path: '/contact/employee/list',
+        name: 'employee-list',
+        icon: 'smile',
+        component: './contact/employee',
       },
     ]
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/chat/list',
+  },
+  {
+    path: '/welcome',
+    name: 'welcome',
+    icon: 'smile',
+    hideInMenu: true,
+    component: './Welcome',
   },
   // {
   //   name: '分析页',

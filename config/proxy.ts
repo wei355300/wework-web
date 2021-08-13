@@ -14,8 +14,8 @@ export default {
     },
   },
   test: {
-    '/api/': {
-      target: 'https://preview.pro.ant.design',
+    '/api/qc': {
+      target: 'http://101.37.90.197:8800',
       changeOrigin: true,
       pathRewrite: { '^': '' },
     },

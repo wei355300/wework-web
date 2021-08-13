@@ -50,7 +50,11 @@ export default {
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
 
-  'menu.employee': '员工管理',
-  'menu.employee.employee-list': '员工列表',
-  'menu.employee.account-list': '账号列表',
+  'menu.contact': '人员管理',
+  'menu.contact.employee-list': '员工列表',
+  'menu.contact.account-list': '账号列表',
+  'menu.contact.contact-external-list': '外部联系人列表',
+
+  'menu.chat': '会话管理',
+  'menu.chat.chat-list': '会话列表'
 };
