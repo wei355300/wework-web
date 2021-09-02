@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import { Dispatch, connect } from 'umi';
 import InfiniteScroll from 'react-infinite-scroller';
-import { Drawer, List, Avatar } from 'antd';
+import {Drawer, List} from 'antd';
 import { ChatRoom, ChatMsg } from '../service';
 import { ChatRoomStateType } from '../model';
 
@@ -28,19 +28,27 @@ export interface ChatRoomProps {
 const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
   const { dispatch } = props;
   const drawerWidth = 850;
-  const defaultPageSize = 20;
-  // const scrollElementRef = useRef(null);
+  const defaultPageSize = 10;
+  const scrollBottomElementRef = useRef(null);
+  const [isFirst, setFirst] = useState(true);
 
   useEffect(() => {
-    loadMoreData(1);
-    //todo 
-    //scroll到每次加载的数据的最后一条的位置
-    //div.scrollTop
-    // console.log("scrollElementRef", scrollElementRef?.current);
-  }, []);
+    if (isFirst) {
+      loadMoreData(1);
+      setFirst(false);
+    }
+
+    if((props.list?.length || 0 <= defaultPageSize)) {
+      scrollToBottom();
+    }
+  }, [props.list]);
+
+  const scrollToBottom = () => {
+    //fixme 滚动事件会触发 InfiniteScroll 的滚动监听, 导致快速的加载两次数据
+    scrollBottomElementRef?.current?.scrollIntoView({ behavior: "smooth" });
+  }
 
   const loadMoreData = (page:number) => {
-    console.log('page', page);
     let currentPage = page || 1;
     dispatch({
       type: 'chatRoomMsgModel/reqChatRoomMsgList',
@@ -76,8 +84,8 @@ const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
         }}
       >
         <>
+          {/*<Button onClick={scrollToBottom}>Btn</Button>*/}
           <InfiniteScroll
-            // ref={scrollElementRef}
             initialLoad={false}
             pageStart={1}
             loadMore={loadMoreData}
@@ -85,13 +93,15 @@ const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
             useWindow={false}
             isReverse={true}
           >
+            <>
             <List dataSource={props.list} 
               loading={props.loading}
               renderItem={msg => (
                 ChatMsgComponentProvider({msg: msg}))}
               >
             </List>
-            {/* <div ref={messagesEndRef} /> */}
+             <div ref={scrollBottomElementRef} />
+            </>
           </InfiniteScroll>
         </>
       </Drawer>

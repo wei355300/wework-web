@@ -11,16 +11,18 @@ import React, { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
 import { Typography, List, Avatar, Card } from 'antd';
 
-import {
-    FileOutlined
-} from '@ant-design/icons';
+// import {
+//     FileOutlined
+// } from '@ant-design/icons';
 
 import { ChatMsg } from '../service';
+// import {parseFileName} from "@/pages/chat/MsgUtils";
+import {MsgPureCardComp} from "@/pages/chat/components/MsgPureCardComp";
 
-const { Text } = Typography;
+// const { Text } = Typography;
 
 export interface VideoMsgProps {
-    msg?: ChatMsg;
+    msg: ChatMsg;
     pure?: boolean;
 }
 
@@ -32,34 +34,26 @@ class VideoMsg extends React.Component<VideoMsgProps>  {
         super(props);
         this.msgType='video';
     }
+    
+    render() {
+        const msg = this.props.msg || {};
 
-  render() {
-    let msg = this.props.msg || {};
-    let filePath = msg.content || "";
-    let fileSplits = filePath.split('/') || [];
-    let s = fileSplits?.length || 0;
-    let fileName = fileSplits[s-1];
+        if (this.props.pure) {
+            return <MsgPureCardComp msg={msg} />
+        }
 
-    if(this.props.pure) {
-        return <Card
-                    hoverable
-                    style={{ width: 500 }}
-                    >
-                    <FileOutlined />{fileName}
-                </Card>
-    }
-    return <List.Item key={msg.id} extra={msg.msgTime}>
-        <List.Item.Meta
-            avatar={
-                <Avatar src={msg.sender?.thumbAvatar} />
-            }
-            title={msg.sender?.name}
-            description={
-                <ReactPlayer height={300} controls={true} url={msg.content} />
-            }
-        />
-    </List.Item>
-  };
+        return <List.Item key={msg.id} extra={msg.msgTime}>
+                <List.Item.Meta
+                    avatar={
+                        <Avatar src={msg.sender?.thumbAvatar} />
+                    }
+                    title={msg.sender?.name}
+                    description={
+                        <ReactPlayer width={300} height={300} controls={true} url={msg.content} />
+                    }
+                />
+            </List.Item>
+    };
 };
 
 export default VideoMsg;
