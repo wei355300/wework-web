@@ -1,6 +1,6 @@
 import { request, Effect, history, Reducer } from 'umi';
 
-import { chatRoomMsgList, ChatMsg} from './service'
+import { chatRoomMsgList, ChatMsg, reqVoicePlayAddress} from './service'
 
 export interface ChatRoomStateType {
   list?: ChatMsg[];
@@ -13,10 +13,12 @@ export interface ChatRoomMsgModelType {
   state: ChatRoomStateType;
   effects: {
     reqChatRoomMsgList: Effect;
+    reqVoicePlayAddr: Effect;
   };
   reducers: {
     getChatRoomMsgList: Reducer<ChatRoomStateType>;
     resetChatRoomMsgList: Reducer;
+    getVoicePlayAddr: Reducer;
   };
 }
 
@@ -37,6 +39,13 @@ const ChatRoomMsgModel: ChatRoomMsgModelType = {
         payload: response,
       });
     },
+    *reqVoicePlayAddr({ payload }, { call, put }) {
+      const response = yield call(reqVoicePlayAddress, payload);
+      yield put({
+        type: 'getVoicePlayAddr',
+        payload: response,
+      });
+    }
   },
 
   reducers: {
@@ -57,6 +66,12 @@ const ChatRoomMsgModel: ChatRoomMsgModelType = {
         ...state,
         list: [],
         total: 0,
+      };
+    },
+    getVoicePlayAddr(state, {payload}) {
+      return {
+        ...state,
+        url: payload.url
       };
     },
   },

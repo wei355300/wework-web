@@ -4,12 +4,10 @@
  * 
  * 
  */
-import React, { useState, useEffect } from 'react';
-import { Typography, List, Avatar, Image } from 'antd';
+import React from 'react';
+import { List, Avatar, Image } from 'antd';
 
 import { ChatMsg } from '../service';
-
-const { Text } = Typography;
 
 export interface ImageMsgProps {
     msg?: ChatMsg;

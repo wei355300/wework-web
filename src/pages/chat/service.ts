@@ -64,6 +64,14 @@ export interface PaginationChatRoomUserListResult {
     errorMessage?: string;
     data?: ChatRoomUserListResult;
 };
+
+export interface VoicePlayAddressResult {
+    success?: boolean;
+    showType?: number;
+    errorCode?: string;
+    errorMessage?: string;
+    data?: string;
+};
   
 export async function chatRoomList(
     params: {
@@ -126,6 +134,26 @@ export async function chatRoomUserList(
     const ret = {
         data:res.data?.list || [],
         total:res.data?.total || 0,
+        success:res.success
+    };
+    return ret;
+}
+
+export async function reqVoicePlayAddress(
+    params: {
+        msgId: string
+    },
+    options?: { [key: string]: any }) {
+        const res = await request<VoicePlayAddressResult>("/api/qc/wework/msg/media/voice/mp3", {
+        method: 'GET',
+        params: {
+            trans: true, //强制转码
+            ...params
+        },
+        ...(options || {}),
+    });
+    const ret = {
+        url: res.data || undefined,
         success:res.success
     };
     return ret;

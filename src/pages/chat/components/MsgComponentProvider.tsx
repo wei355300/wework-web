@@ -7,7 +7,6 @@
  * 通过 msgtype 选择合适的 component 为子组件显示在 dom 下
  */
 
-import React from 'react';
 import TextMsg from './TextMsg';
 import VideoMsg from './VideoMsg';
 import ImageMsg from './ImgMsg';
