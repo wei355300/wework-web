@@ -1,4 +1,4 @@
-import { request, Effect, history, Reducer } from 'umi';
+import { Effect, Reducer } from 'umi';
 
 import { chatRoomMsgList, ChatMsg, reqVoicePlayAddress} from './service'
 
@@ -52,8 +52,8 @@ const ChatRoomMsgModel: ChatRoomMsgModelType = {
     getChatRoomMsgList(state, { payload }) {
       let res_list = payload.data;
       let state_list = state?.list || [];
-      let r_list = res_list.reverse().concat(state_list);
-      // let r_list = state_list.concat(res_list);
+      // let r_list = res_list.reverse().concat(state_list);
+      let r_list = state_list.concat(res_list);
       return {
         ...state,
         list: r_list,

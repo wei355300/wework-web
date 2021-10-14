@@ -33,20 +33,21 @@ const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
   const [isFirst, setFirst] = useState(true);
 
   useEffect(() => {
+    // loadMoreData(1);
     if (isFirst) {
       loadMoreData(1);
       setFirst(false);
     }
-
-    if((props.list?.length || 0 <= defaultPageSize)) {
-      scrollToBottom();
-    }
+  //
+  //   // if((props.list?.length && (props.preDataSize || 0) <= defaultPageSize)) {
+  //   //   scrollToBottom();
+  //   // }
   }, [props.list]);
 
-  const scrollToBottom = () => {
-    //fixme 滚动事件会触发 InfiniteScroll 的滚动监听, 导致快速的加载两次数据
-    scrollBottomElementRef?.current?.scrollIntoView({ behavior: "smooth" });
-  }
+  // const scrollToBottom = () => {
+  //   //fixme 滚动事件会触发 InfiniteScroll 的滚动监听, 导致快速的加载两次数据
+  //   scrollBottomElementRef?.current?.scrollIntoView({ behavior: "smooth" });
+  // }
 
   const loadMoreData = (page:number) => {
     let currentPage = page || 1;
@@ -91,7 +92,7 @@ const ChatRoomComponent: React.FC<ChatRoomProps> = (props) => {
             loadMore={loadMoreData}
             hasMore={!props.loading && hasMore()}
             useWindow={false}
-            isReverse={true}
+            isReverse={false}
           >
             <>
             <List dataSource={props.list} 

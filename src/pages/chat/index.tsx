@@ -3,7 +3,7 @@
  * 默认按聊天室的最后消息的时间倒序展示
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Typography } from 'antd';
 import ProList from '@ant-design/pro-list';
 import { PageContainer } from '@ant-design/pro-layout';

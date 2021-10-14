@@ -1,16 +1,16 @@
-import { Button, message, Input, Drawer } from 'antd';
+import { message } from 'antd';
 import React, { useState, useRef } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import ProTable from '@ant-design/pro-table';
-import OpenAccountForm, { OpenAccountFormProps } from './OpenAccountForm';
+import OpenAccountForm from './OpenAccountForm';
 import { employeeList, Employee } from './model';
 import { OpenAccountParams, openAccount } from '../Account/model';
 
 const EmployeeList: React.FC = () => {
 
   const [openAccountModalVisible, handleOpenAccountModalVisible] = useState<boolean>(false);
-  const [showDetail, setShowDetail] = useState<boolean>(false);
+  // const [showDetail, setShowDetail] = useState<boolean>(false);
   const actionRef = useRef<ActionType>();
   const [currentRow, setCurrentRow] = useState<Employee>();
 
